@@ -15,6 +15,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.hostname = "myproject"
 
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+    # vb.gui = true
+
+    # Amount of memory on the VM
+    vb.memory = 1024
+    # 1/4 of memory
+    # vb.memory = `memtotal=$(awk '$1~/MemTotal:/ {print $2}' /proc/meminfo); echo -n $(( (memtotal / 1024) / 4 ))`
+
+    # Amount of CPUs used
+    vb.cpus = 2
+    # 1/2 of CPUs
+    # vb.cpus = `totalcpus=$(grep "processor" /proc/cpuinfo | wc -l); echo -n $(( $totalcpus / 2 ))`
+  end
+
   # Scripts
   config.vm.provision "shell", path: "scripts/install_modules.sh"
 
