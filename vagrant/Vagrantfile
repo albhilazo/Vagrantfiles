@@ -11,7 +11,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network "private_network", ip: "192.168.33.10"
 
-  config.vm.synced_folder "../shared/www", "/var/www", create: true
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  config.vm.synced_folder "../shared/www",  "/var/www", create: true
+  config.vm.synced_folder "../shared/logs", "/var/log", create: true
+  # config.vm.synced_folder "<host/path>", "<guest/path>", owner: "vagrant", group "vagrant"
+  # config.vm.synced_folder "<host/path>", "<guest/path>", :mount_options => ["dmode=777,fmode=777"]
+  # config.vm.synced_folder "<host/path>", "<guest/path>", type: "nfs"
 
   config.vm.hostname = "myproject"
 
