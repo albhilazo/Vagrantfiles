@@ -9,7 +9,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "puphpet/centos65-x64"
   # config.vm.box_url = "<path/to/box/file>"
 
-  config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", type: "dhcp"
+  # config.vm.network "private_network", ip: "192.168.33.10", type: "static"
 
   # config.vm.network "forwarded_port", guest: 80, host: 8080
 
