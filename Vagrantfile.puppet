@@ -1,0 +1,36 @@
+$shell_provision = <<SCRIPT
+  puppet module install <author>/<module> --modulepath $1 --version <version-number>
+
+  git clone <repo-url> $1/mymodule
+  echo "include mymodule" > $2/site.pp
+
+  exit 0
+SCRIPT
+
+MODULES_PATH   = "modules"
+MANIFESTS_PATH = "environments/development/manifests"
+
+Vagrant.configure(2) do |config|
+
+  # ...
+
+  config.vm.box = "puphpet/centos65-x64"
+
+  config.vm.provision "shell" do |shell|
+    shell.inline = $shell_provision
+    shell.args   = ["/vagrant/#{MODULES_PATH}/", "/vagrant/#{MANIFESTS_PATH}/"]
+  end
+
+  config.vm.provision "puppet" do |puppet|
+    puppet.module_path = MODULES_PATH
+
+    # Puppet 3
+    puppet.manifests_path = MANIFESTS_PATH
+    puppet.manifest_file  = "site.pp"
+
+    # Puppet 4
+    puppet.environment_path = "environments"
+    puppet.environment      = "development"
+  end
+
+end

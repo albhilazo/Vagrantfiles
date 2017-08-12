@@ -1,0 +1,14 @@
+USERNAME = "devel"
+
+Vagrant.configure(2) do |config|
+
+  # ...
+
+  config.vm.provision "shell", path: "provision.sh", args: ["#{USERNAME}"]
+
+  config.vm.provision "shell" do |shell|
+    shell.name   = "create src symlink in #{USERNAME} user home to synced folder"
+    shell.inline = "ln -s --force --no-target-directory /home/vagrant/src /home/#{USERNAME}/src"
+  end
+
+end
